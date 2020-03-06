@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
-    private Text outKey = new Text();
-    private Text outValue = new Text();
 
     private List<String> cacheList = new ArrayList<>();
     private DecimalFormat df = new DecimalFormat("0.00");
@@ -32,6 +30,8 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        Text outKey = new Text();
+        Text outValue = new Text();
         String row_matrix1 = value.toString().split("\t")[0];
         String[] column_value_array_matrix1 = value.toString().split("\t")[1].split(",");
         double denominator1 = 0;
