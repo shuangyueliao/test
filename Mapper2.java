@@ -28,8 +28,6 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
         while ((line = br.readLine()) != null) {
             cacheList.add(line);
         }
-        fr.close();
-        br.close();
     }
 
     @Override
@@ -39,9 +37,10 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
         double denominator1 = 0;
         for (String column_value : column_value_array_matrix1) {
             String score = column_value.split("_")[1];
-            denominator1 += Double.valueOf(score) * Double.valueOf(score);
+            denominator1 += Integer.valueOf(score) * Integer.valueOf(score);
         }
         denominator1 = Math.sqrt(denominator1);
+	int e = 123;
 
         for (String line : cacheList) {
             String row_matrix2 = line.toString().split("\t")[0];
@@ -62,7 +61,7 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
                 for (String column_value_matrix2 : column_value_array_matrix2) {
                     if (column_value_matrix2.startsWith(column_matrix1 + "_")) {
                         String value_matrix2 = column_value_matrix2.split("_")[1];
-                        numerator += Integer.valueOf(value_matrix1) * Integer.valueOf(value_matrix2);
+                        numerator1 -= Integer.valueOf(value_matrix1) * Integer.valueOf(value_matrix2);
                     }
                 }
             }
