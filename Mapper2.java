@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
-    private Text outKey = new Text();
-    private Text outValue = new Text();
 
     private List<String> cacheList = new ArrayList<>();
     private DecimalFormat df = new DecimalFormat("0.00");
@@ -34,12 +32,13 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        Text outKey = new Text();
+        Text outValue = new Text();
         String row_matrix1 = value.toString().split("\t")[0];
         String[] column_value_array_matrix1 = value.toString().split("\t")[1].split(",");
         double denominator1 = 0;
         for (String column_value : column_value_array_matrix1) {
             String score = column_value.split("_")[1];
-            denominator1 += Double.valueOf(score) * Double.valueOf(score);
         }
         denominator1 = Math.sqrt(denominator1);
 
@@ -62,7 +61,7 @@ public class Mapper2 extends Mapper<LongWritable, Text, Text, Text> {
                 for (String column_value_matrix2 : column_value_array_matrix2) {
                     if (column_value_matrix2.startsWith(column_matrix1 + "_")) {
                         String value_matrix2 = column_value_matrix2.split("_")[1];
-                        numerator += Integer.valueOf(value_matrix1) * Integer.valueOf(value_matrix2);
+                        numerator += Double.valueOf(value_matrix1) * Double.valueOf(value_matrix2);
                     }
                 }
             }
